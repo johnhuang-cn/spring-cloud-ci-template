@@ -1,0 +1,29 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=/root/.m2/repository"
+  DOCKER_DRIVER: overlay2
+  PROJECT_NAME: $CI_PROJECT_NAME
+  PROJECT_VERSION: "0.0.1"
+
+stages:
+  - build
+  - deploy
+
+maven-build:
+  stage: build
+  script: 
+    - mvn package -B -DskipTests
+    - mv target/$CI_PROJECT_NAME*.jar target/app.jar
+    - docker build -t $DOCKER_HUB_REPO:$PROJECT_NAME-$PROJECT_VERSION .
+    - docker push $DOCKER_HUB_REPO:$PROJECT_NAME-$PROJECT_VERSION
+
+docker-deploy:
+  stage: deploy
+  image: $DOCKER_HUB_REPO:ssh-client-202
+  script:
+    - ssh -T $SSH_USER@$DEPLOY_SERVER "
+      sudo docker container stop $PROJECT_NAME;
+      sudo docker container rm $PROJECT_NAME;
+      sudo docker pull $DOCKER_HUB_REPO:$PROJECT_NAME-$PROJECT_VERSION;
+      sudo docker run --detach --name $PROJECT_NAME --net=host $DOCKER_HUB_REPO:$PROJECT_NAME-$PROJECT_VERSION;
+      exit;
+      "

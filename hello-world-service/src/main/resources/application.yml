@@ -1,0 +1,35 @@
+# hello-world-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
+    
+server:
+  port: 0
+  
+spring:
+  application:
+    name: hello-world-service
+  kafka:
+    bootstrap-servers: 192.168.1.105:9092
+    consumer:
+      group-id: myGroup
+  rabbitmq:
+    host: 192.168.1.105
+    port: 5672
+    username: root
+    password: pass
+  cloud:
+    bus:
+      enabled: true
+      refresh:
+        enabled: true
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh       

@@ -1,0 +1,12 @@
+# hello-world-service
+spring:
+  application:
+    name: hello-world-service
+  cloud:
+    config:
+      label: master
+      profile: dev
+      uri: http://${config_server:localhost}:${config_port:8888}/ 
+    bus:
+      refresh:
+        enabled: true

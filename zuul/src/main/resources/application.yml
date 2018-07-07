@@ -1,0 +1,16 @@
+# ZUUL
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka_host:localhost}:${eureka_port:8761}/eureka/
+server:
+  port: ${port:80}
+spring:
+  application:
+    name: service-zuul
+zuul:
+  routes:
+    api-hello:
+      path: /api/v0/**
+      serviceId: hello-world-client
