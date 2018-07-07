@@ -18,7 +18,7 @@ maven-build:
 
 docker-deploy:
   stage: deploy
-  image: $DOCKER_HUB_REPO:ssh-client-202
+  image: $DOCKER_HUB_REPO:ssh-client
   script:
     - ssh -T $SSH_USER@$DEPLOY_SERVER "
       sudo docker container stop $PROJECT_NAME;
