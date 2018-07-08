@@ -25,5 +25,7 @@ https://docs.docker.com/get-started/
 英文参考文档：http://cloud.spring.io/spring-cloud-static/Finchley.RELEASE/multi/multi_spring-cloud.html 
 
 ## 架构图
-![Spring Cloud Hello World Template](diagram/Spring Cloud Hello World Template.png)
 
+![Spring Cloud Hello World Template](diagram/Spring%20Cloud%20Hello%20World%20Template.png)
+
+![CI DIagram](diagram/ci.png)
